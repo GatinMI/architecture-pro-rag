@@ -1,0 +1,57 @@
+{
+  "config": {
+    "n": 10000,
+    "dim": 384,
+    "queries": 200,
+    "k": 5,
+    "cpu": 32,
+    "host": "local dev machine (32 cores, 62GB RAM)"
+  },
+  "results": [
+    {
+      "engine": "faiss (IndexFlatIP, in-memory, single file)",
+      "build_s": 0.002,
+      "save_s": 0.013,
+      "load_s": 0.005,
+      "search": {
+        "mean_ms": 0.191,
+        "p50_ms": 0.172,
+        "p95_ms": 0.259,
+        "max_ms": 0.41
+      },
+      "index_file_mb": 15.36,
+      "rss_mb_after": 94,
+      "rss_delta_mb": 18
+    },
+    {
+      "engine": "chroma (PersistentClient, HNSW, SQLite on disk)",
+      "build_s": 0.876,
+      "save_s": null,
+      "load_s": 0.002,
+      "search": {
+        "mean_ms": 0.525,
+        "p50_ms": 0.513,
+        "p95_ms": 0.586,
+        "max_ms": 1.687
+      },
+      "index_file_mb": null,
+      "rss_mb_after": 252,
+      "rss_delta_mb": 104
+    },
+    {
+      "engine": "qdrant (local storage mode, HNSW by default)",
+      "build_s": 17.71,
+      "save_s": null,
+      "load_s": 0.205,
+      "search": {
+        "mean_ms": 6.48,
+        "p50_ms": 6.317,
+        "p95_ms": 7.577,
+        "max_ms": 8.582
+      },
+      "index_file_mb": null,
+      "rss_mb_after": 642,
+      "rss_delta_mb": 256
+    }
+  ]
+}

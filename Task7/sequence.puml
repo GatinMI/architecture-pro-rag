@@ -1,0 +1,57 @@
+@startuml
+!theme plain
+title Задание 7: обработка запроса и оценка на золотом наборе
+
+actor "Пользователь\n/ evaluate.py" as USER
+participant "bot.py\n(aiogram)" as BOT
+participant "pipeline" as PL
+participant "LLM\n(rewrite + ответ)" as LLM
+database "FAISS\nTask7/index" as IDX
+participant "guard\n(sanitize / filter)" as GRD
+database "queries.jsonl" as LOG
+participant "evaluate.py\n(золотой набор)" as EV
+database "golden_results.jsonl" as RES
+
+== Обработка запроса ==
+USER -> BOT : вопрос
+BOT -> PL : answer(query)
+PL -> LLM : переформулирование (→ язык корпуса)
+note right
+  место сбоя: ошибка LLM / таймаут
+  → повторный вызов
+end note
+LLM --> PL : search_query
+PL -> IDX : эмбеддинг + топ-5
+IDX --> PL : чанки + косинус
+note right
+  место сбоя: пустой индекс
+  или лучший хит ниже порога 0.40
+  → «Не знаю»
+end note
+PL -> GRD : чистка чанков
+GRD --> PL : безопасные фрагменты
+alt max_cos < 0.40
+  PL --> BOT : «Не знаю»
+else найдены чанки
+  PL -> LLM : промпт (few-shot + CoT)
+  note right
+    место сбоя: генерация
+    (content пуст — reasoning съел
+    бюджет токенов) → повтор
+  end note
+  LLM --> PL : ответ
+end
+PL -> LOG : JSONL: запрос, источники, длина, статус
+PL --> BOT : ответ
+BOT --> USER : сообщение
+
+== Оценка качества ==
+EV -> EV : чтение golden_questions.txt
+loop каждый вопрос (known / gap / tricky)
+  EV -> PL : answer(query)
+  PL --> EV : ответ + источники + cos
+  EV -> EV : вердикт:\nknown — ключевые слова в ответе;\ngap — «Не знаю» (иначе — leaky);\ntricky — ответ по теме
+end
+EV -> RES : запись на вопрос
+EV --> USER : сводная таблица (pass / clean / leaky)
+@enduml

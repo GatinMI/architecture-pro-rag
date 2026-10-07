@@ -12,9 +12,8 @@ __pycache__/
 # IDE
 .idea/
 
-# Логи
-logs/
-*.log
+
+
 
 # Мусор
 .DS_Store

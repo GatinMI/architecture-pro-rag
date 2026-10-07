@@ -1,0 +1,78 @@
+"""Настройки пайплайна: всё берётся из .env в корне репозитория.
+
+Переменные:
+    LITELLM_URL      — базовый URL OpenAI-совместимого API (proxy LiteLLM)
+    LITELLM_API_KEY  — ключ API
+    LLM_MODEL        — имя модели, например selectel/qwen/qwen3.8-27b
+    BOT_TOKEN        — токен Telegram-бота (только для bot.py)
+    TELEGRAM_PROXY   — опционально, прокси для Telegram: socks5://host:port
+    RAG_INDEX_DIR    — папка индекса (по умолчанию Task3/index;
+                       в Задании 5 — Task5/index)
+    RAG_GUARD_PROMPT / RAG_GUARD_SANITIZE / RAG_GUARD_FILTER
+                     — слои защиты от инъекций (1/0, по умолчанию 1)
+    RAG_QUERY_LOG     — путь к JSONL-логу запросов (Задание 7);
+                        пусто — логирование выключено
+"""
+
+import os
+from dataclasses import dataclass
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+BASE = Path(__file__).resolve().parent.parent  # Task4/
+REPO_ROOT = BASE.parent
+
+load_dotenv(REPO_ROOT / ".env")
+
+
+def _required(name: str) -> str:
+    value = os.environ.get(name, "").strip()
+    if not value:
+        raise RuntimeError(
+            f"нет переменной {name} — проверьте .env в корне репозитория"
+        )
+    return value
+
+
+@dataclass(frozen=True)
+class Settings:
+    llm_url: str = _required("LITELLM_URL")
+    llm_api_key: str = _required("LITELLM_API_KEY")
+    llm_model: str = _required("LLM_MODEL")
+    bot_token: str = os.environ.get("BOT_TOKEN", "").strip()
+    # опциональный прокси для Telegram (например socks5://localhost:2080);
+    # пусто — прямые запросы к api.telegram.org
+    telegram_proxy: str = os.environ.get("TELEGRAM_PROXY", "").strip()
+
+    # индекс из Задания 3; в Задании 5 — копия с «злонамеренным» документом
+    # (RAG_INDEX_DIR=Task5/index)
+    index_dir: Path = Path(
+        os.environ.get("RAG_INDEX_DIR", str(REPO_ROOT / "Task3" / "index"))
+    )
+    embedding_model: str = "all-MiniLM-L6-v2"
+
+    # поиск
+    top_k: int = 5
+    # если максимальная косинусная близость ниже порога — «не знаю».
+    # По замерам: запросы из базы дают 0.49–0.65, вне базы — не выше 0.33
+    score_threshold: float = 0.40
+
+    # слои защиты от промпт-инъекций (Задание 5), выключаются для
+    # демонстрации уязвимости: RAG_GUARD_*=0
+    guard_prompt: bool = os.environ.get("RAG_GUARD_PROMPT", "1") == "1"
+    guard_sanitize: bool = os.environ.get("RAG_GUARD_SANITIZE", "1") == "1"
+    guard_filter: bool = os.environ.get("RAG_GUARD_FILTER", "1") == "1"
+
+    # LLM. Бюджет большой: модель «думающая», reasoning тоже ест токены,
+    # и если content не помещается — ответ теряется
+    temperature: float = 0.2
+    max_tokens: int = 4096
+
+    # лог запросов (Задание 7): путь к JSONL; пусто — логирование выключено
+    query_log: str = os.environ.get("RAG_QUERY_LOG", "").strip()
+
+    few_shot_file: Path = BASE / "few_shot_examples.json"
+
+
+SETTINGS = Settings()
