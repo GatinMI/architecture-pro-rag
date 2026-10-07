@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets / локальная конфигурация
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+
+# Логи
+logs/
+*.log
+
+# Мусор
+.DS_Store
+
+# Временные файлы бенчмарков (индексы, SQLite-хранилища)
+Task1/benchmarks/tmp/
