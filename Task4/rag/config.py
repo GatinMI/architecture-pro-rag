@@ -10,6 +10,8 @@
                        в Задании 5 — Task5/index)
     RAG_GUARD_PROMPT / RAG_GUARD_SANITIZE / RAG_GUARD_FILTER
                      — слои защиты от инъекций (1/0, по умолчанию 1)
+    RAG_QUERY_LOG     — путь к JSONL-логу запросов (Задание 7);
+                        пусто — логирование выключено
 """
 
 import os
@@ -66,6 +68,9 @@ class Settings:
     # и если content не помещается — ответ теряется
     temperature: float = 0.2
     max_tokens: int = 4096
+
+    # лог запросов (Задание 7): путь к JSONL; пусто — логирование выключено
+    query_log: str = os.environ.get("RAG_QUERY_LOG", "").strip()
 
     few_shot_file: Path = BASE / "few_shot_examples.json"
 

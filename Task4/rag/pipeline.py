@@ -13,7 +13,7 @@
 import re
 from dataclasses import dataclass, field
 
-from . import guard, llm, prompt
+from . import guard, llm, prompt, querylog
 from .config import SETTINGS
 from .retriever import search as faiss_search
 
@@ -23,6 +23,11 @@ REWRITE_SYSTEM = (
     "язык для поиска в англоязычной базе знаний. Названия персонажей, "
     "планет, фракций и технологий оставь в том виде, как в вопросе. "
     "Ответь только одним английским вопросом, без пояснений."
+)
+
+REFUSAL_TEXT = (
+    "Не знаю — в базе знаний не нашлось фрагментов, "
+    "которые отвечали бы на этот вопрос."
 )
 
 
@@ -67,21 +72,22 @@ class RAGPipeline:
             )
 
         if not hits or hits[0][0] < SETTINGS.score_threshold:
-            return Answer(
-                text=(
-                    "Не знаю — в базе знаний не нашлось фрагментов, "
-                    "которые отвечали бы на этот вопрос."
-                ),
+            result = Answer(
+                text=REFUSAL_TEXT,
                 known=False,
                 search_query=search_q,
                 hits=hits,
             )
+        else:
+            messages = prompt.build_messages(query, hits)
+            text = llm.ask(messages)
+            result = Answer(
+                text=text, known=True, search_query=search_q, hits=hits
+            )
 
-        messages = prompt.build_messages(query, hits)
-        text = llm.ask(messages)
-        return Answer(
-            text=text, known=True, search_query=search_q, hits=hits
-        )
+        # лог каждого запроса (Задание 7), включается RAG_QUERY_LOG
+        querylog.log(query, result)
+        return result
 
 
 PIPELINE = RAGPipeline()

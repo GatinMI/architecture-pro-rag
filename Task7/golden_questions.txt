@@ -1,0 +1,28 @@
+# Золотой набор вопросов — Задание 7
+#
+# Индекс: Task7/index (6 928 → 3 954 чанка; удалены упоминания:
+# Xarn Velgor, Void Core, Synth Flux — см. make_gap_index.py).
+#
+# Формат строки:  тип | вопрос | ожидаемые ключевые слова (через «;»)
+#
+#   known  — тема есть в базе, бот должен ответить;
+#            ключевые слова = что должно быть в хорошем ответе
+#   gap    — тема удалена из базы, бот должен ответить «Не знаю»;
+#            если ответил — «протечка» пробела (отдельный вердикт)
+#   tricky — тема известная, но в базе нет профильной статьи
+#            (покрытие дырявое — найденный анализом пробел)
+
+known | Кто такой Dax Karrick? | Karrick; Brevok
+known | Что такое flux blade? | flux blade; Aetheri
+known | Что произошло в битве при Frostmark? | Frostmark; Imperium
+known | Кто такой Vex Vark? | Vark; bounty
+known | Кто такой Orien Kade? | Kade; Aetheri
+known | Кто такой Brevok? | Brevok; Vorak
+known | Кто такая Nyla? | Nyla; Joren
+known | Что такое Directive 66? | Directive 66; Aetheri
+gap | Кто такой Xarn Velgor? |
+gap | Что такое Void Core? |
+gap | Как уничтожили Void Core? |
+gap | Что такое Synth Flux? |
+gap | Что такое Sith Code? |
+tricky | Какова история планеты Korrath? | Korrath
