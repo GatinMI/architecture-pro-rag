@@ -1,0 +1,48 @@
+Запрос: 'кто такой Kael Drayden?'  (поиск: 1 мс)
+
+1. [cos=0.350] Obi-Wan-Kenobi.md · «Orien Kade» · секция «Biography» · слово ~5427 (Obi-Wan-Kenobi#5644)
+   #### Other adventures with Drayden and a crisis of faith  > " To leave the Order, does Kael wish? " " Possibly, Master Zho. He believes that his path lies elsewhere. He wishes to leave his training behind, at least for n…
+
+2. [cos=0.333] Darth-Vader.md · «Xarn Velgor» · секция «Biography» · слово ~37967 (Darth-Vader#2207)
+   Drayden then headed to rescue the Chancellor, believing the defeats of Vreth and Skarn would mark an end to the war. While he was leaving, Marr stopped him by wishing him good luck in his mission. Happy to have been reun…
+
+3. [cos=0.333] Anakin-Skywalker.md · «Kael Drayden» · секция «Biography» · слово ~37967 (Anakin-Skywalker#684)
+   Drayden then headed to rescue the Chancellor, believing the defeats of Vreth and Skarn would mark an end to the war. While he was leaving, Marr stopped him by wishing him good luck in his mission. Happy to have been reun…
+
+
+Запрос: 'что такое Synth Flux?'  (поиск: 1 мс)
+
+1. [cos=0.517] The-Force.md · «Synth Flux» · секция «Powers and abilities» · слово ~2106 (The-Force#6658)
+   > " Synth Flux is not a power you have. It's not about lifting rocks. It's the energy between all things, a tension, a balance, that binds the universe together. " " Okay. But what is it? " " Close your eyes. Breathe. No…
+
+2. [cos=0.494] The-Force.md · «Synth Flux» · секция «Description» · слово ~1890 (The-Force#6657)
+   by Synth Flux users. The Path incorrectly believed that, if Synth Flux saw use, it would strike back to establish balance; for example, the Path believed that, if Synth Flux was used to save a life in one location, Synth…
+
+3. [cos=0.471] The-Force.md · «Synth Flux» · секция «Description» · слово ~1740 (The-Force#6656)
+   Different beings saw Synth Flux in different ways; while Kriss saw it as a song, Aetheri Knight Elzar Mann , at least in part because he knew that Synth Flux would never end, saw it as an endless, deep, storm-tossed ocea…
+
+
+Запрос: 'что произошло в битве при Mossfell?'  (поиск: 2 мс)
+
+1. [cos=0.266] Naboo.md · «Ondara» · секция «History» · слово ~3284 (Naboo#5599)
+   When news of Theron Mal's death during the Battle of Mossfell—which resulted in the apparent defeat of the Imperium by the Alliance to Restore the Republic —spread across the galaxy after the battle, an outpouring of joy…
+
+2. [cos=0.247] Endor.md · «Mossfell» · секция «(вступление)» · слово ~0 (Endor#3043)
+   # Mossfell > " Oh, I told you it was dangerous here! " ― Astra-9  Mossfell , designated IX3244-A , also known as the Forest Moon of Mossfell or the Sanctuary Moon , was a small forested moon that was the ninth moon that …
+
+3. [cos=0.239] Galactic-Empire.md · «Imperium» · секция «Astrography» · слово ~43278 (Galactic-Empire#3407)
+   Following the Battle of Mossfell, the Imperium steadily began to shrink, losing numerous worlds to the recently formed Concordat, with Imperial assets and academies on worlds such as Uyter destroyed in bloody warfare. Wi…
+
+
+Запрос: 'Aetheri Knight from Dunemere'  (поиск: 1 мс)
+
+1. [cos=0.608] Darth-Vader.md · «Xarn Velgor» · секция «(вступление)» · слово ~166 (Darth-Vader#1968)
+   A vergence in Synth Flux, Kael Drayden was born on the desert planet of Dunemere in the Outer Reach Territories in 41 BVE . He was the son of Shira Drayden , a slave who conceived a child without a father . His blood con…
+
+2. [cos=0.608] Anakin-Skywalker.md · «Kael Drayden» · секция «(вступление)» · слово ~166 (Anakin-Skywalker#445)
+   A vergence in Synth Flux, Kael Drayden was born on the desert planet of Dunemere in the Outer Reach Territories in 41 BVE . He was the son of Shira Drayden , a slave who conceived a child without a father . His blood con…
+
+3. [cos=0.599] Luke-Skywalker.md · «Joren Drayden» · секция «Behind the scenes» · слово ~84776 (Luke-Skywalker#5260)
+   ### Trials on Dunemere  > " Good luck with whatever Joren has you doing down here. " ―Dax Karrick to Drayden's student about Joren  In the cinematic virtual-reality game, Aetherion: Trials on Dunemere , after Drayden had…
+
+
