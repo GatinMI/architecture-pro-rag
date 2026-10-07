@@ -1,0 +1,14 @@
+{
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "dim": 384,
+  "params_M": 22.7,
+  "chunks": 300,
+  "words_per_chunk": 250,
+  "total_words": 76200,
+  "model_load_s": 3.05,
+  "encode_s": 2.14,
+  "chunks_per_s": 140.1,
+  "words_per_s": 35591.0,
+  "rss_mb_after": 568,
+  "rss_delta_mb": 124
+}
