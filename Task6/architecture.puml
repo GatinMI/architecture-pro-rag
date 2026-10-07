@@ -1,0 +1,28 @@
+@startuml
+!theme plain
+title Задание 6: автоматическое обновление базы знаний
+
+skinparam componentStyle rectangle
+
+cloud "Источник данных\nTask6/inbox/\nновые .md-файлы\n(симулирует синк из\nS3 / Git / Drive)" as SRC
+
+rectangle "Планировщик: cron\n0 6 * * * — ежедневно в 06:00\nTask6/run_update.sh" as SCHED
+
+component "update_index.py\nсравнение sha256\nс манифестом" as UPD
+component "Чанки\nsplit_sections + chunk_unit\n(схема Задания 3)" as CHUNK
+component "Эмбеддинги\nall-MiniLM-L6-v2\n384D, CPU" as EMB
+
+database "Живой индекс (FAISS)\nTask6/index/\nfaiss.index + chunks.jsonl\n(атомарное сохранение)" as IDX
+database "Манифест\nTask6/state/manifest.json" as MAN
+folder "Логи\nTask6/logs/update.log\nTask6/logs/updates.jsonl" as LOG
+actor "RAG-бот\nTask4/bot.py" as BOT
+
+SRC -down-> UPD : "файлы *.md"
+SCHED -down-> UPD : "запуск"
+UPD -right-> CHUNK : "новые / изменённые"
+CHUNK -right-> EMB : "текст"
+EMB -down-> IDX : "векторы\n(add / rebuild)"
+UPD <--> MAN
+UPD -down-> LOG
+IDX -right-> BOT : "RAG_INDEX_DIR"
+@enduml
