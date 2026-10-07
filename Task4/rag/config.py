@@ -6,6 +6,10 @@
     LLM_MODEL        — имя модели, например selectel/qwen/qwen3.8-27b
     BOT_TOKEN        — токен Telegram-бота (только для bot.py)
     TELEGRAM_PROXY   — опционально, прокси для Telegram: socks5://host:port
+    RAG_INDEX_DIR    — папка индекса (по умолчанию Task3/index;
+                       в Задании 5 — Task5/index)
+    RAG_GUARD_PROMPT / RAG_GUARD_SANITIZE / RAG_GUARD_FILTER
+                     — слои защиты от инъекций (1/0, по умолчанию 1)
 """
 
 import os
@@ -39,8 +43,11 @@ class Settings:
     # пусто — прямые запросы к api.telegram.org
     telegram_proxy: str = os.environ.get("TELEGRAM_PROXY", "").strip()
 
-    # индекс из Задания 3
-    index_dir: Path = REPO_ROOT / "Task3" / "index"
+    # индекс из Задания 3; в Задании 5 — копия с «злонамеренным» документом
+    # (RAG_INDEX_DIR=Task5/index)
+    index_dir: Path = Path(
+        os.environ.get("RAG_INDEX_DIR", str(REPO_ROOT / "Task3" / "index"))
+    )
     embedding_model: str = "all-MiniLM-L6-v2"
 
     # поиск
@@ -48,6 +55,12 @@ class Settings:
     # если максимальная косинусная близость ниже порога — «не знаю».
     # По замерам: запросы из базы дают 0.49–0.65, вне базы — не выше 0.33
     score_threshold: float = 0.40
+
+    # слои защиты от промпт-инъекций (Задание 5), выключаются для
+    # демонстрации уязвимости: RAG_GUARD_*=0
+    guard_prompt: bool = os.environ.get("RAG_GUARD_PROMPT", "1") == "1"
+    guard_sanitize: bool = os.environ.get("RAG_GUARD_SANITIZE", "1") == "1"
+    guard_filter: bool = os.environ.get("RAG_GUARD_FILTER", "1") == "1"
 
     # LLM. Бюджет большой: модель «думающая», reasoning тоже ест токены,
     # и если content не помещается — ответ теряется

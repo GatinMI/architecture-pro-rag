@@ -13,7 +13,7 @@
 import re
 from dataclasses import dataclass, field
 
-from . import llm, prompt
+from . import guard, llm, prompt
 from .config import SETTINGS
 from .retriever import search as faiss_search
 
@@ -56,6 +56,15 @@ class RAGPipeline:
     def answer(self, query: str) -> Answer:
         search_q = rewrite_query(query)
         hits = faiss_search(search_q, SETTINGS.top_k)
+
+        # слои защиты от инъекций (Задание 5): очистка текста +
+        # выкидывание вредоносных чанков; порог — по оставшимся
+        if SETTINGS.guard_sanitize or SETTINGS.guard_filter:
+            hits = guard.apply(
+                hits,
+                sanitize_on=SETTINGS.guard_sanitize,
+                filter_on=SETTINGS.guard_filter,
+            )
 
         if not hits or hits[0][0] < SETTINGS.score_threshold:
             return Answer(

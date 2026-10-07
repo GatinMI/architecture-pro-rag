@@ -6,6 +6,7 @@
 """
 
 from .config import SETTINGS
+from . import guard
 
 
 def load_few_shot() -> list[dict]:
@@ -39,6 +40,8 @@ def build_messages(query: str, hits: list[tuple[float, dict]]) -> list[dict]:
     examples = load_few_shot()
     if examples:
         system += "\nПримеры хорошего ответа:\n" + _format_few_shot(examples) + "\n"
+    if SETTINGS.guard_prompt:
+        system += "\n" + guard.PROMPT_SHIELD + "\n"
 
     fragments = []
     for i, (score, chunk) in enumerate(hits, 1):
